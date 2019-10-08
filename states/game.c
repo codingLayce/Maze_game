@@ -91,6 +91,10 @@ List *check_for_best_score (Maze *maze, List *list, int score) {
 	if (list == NULL) {
 		ok = 0;
 	} else {
+		if (nb_elements(list) < 10)  {
+			index = nb_elements(list) -1;
+			ok = 0;
+		}
 		tmp = list->best;
 		while (tmp != NULL) {
 			if (ok == 1 && score < tmp->score) {
@@ -100,11 +104,8 @@ List *check_for_best_score (Maze *maze, List *list, int score) {
 			tmp = tmp->next_score;
 			i++;
 		}
-		if (index >= 10) {
+		if (index >= 10) { /* In case of the index is out of the array size  */
 			ok = 1;
-		} else {
-			index = nb_elements(list) -1;
-			ok = 0;
 		}
 	}
 
