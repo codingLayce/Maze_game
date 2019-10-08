@@ -24,10 +24,12 @@ const int min_row = 1;
 const int min_col = 1;
 
 void generate_maze (Maze *maze, int difficulty) {
+    /* The dif_offset is used when the difficulty is hard.
+     * It allow to remove more walls when the maze is already perfect. */
 	int dif_offset = 0;
 
 	if (difficulty == 2) {
-		dif_offset = 3;	
+		dif_offset = (int)((maze->rows + maze->cols) * 0.1);
 	}
 
 	srand(time(NULL));
@@ -43,7 +45,7 @@ void generate_maze (Maze *maze, int difficulty) {
 		col = (rand() % (max_col - min_col + 1)) + min_col;
 
 		if (maze->board[row][col].type == WALL) {
-			if (check_for_perfect_labyrinthe(maze) == 0) {
+			if (check_for_perfect_labyrinthe(maze) == 0) { /* If 0 means that we are on hard difficulty and trying to remove more walls */
 				if (check_for_valid_wall_to_remove(maze, row, col, 0) == 0) {
 					ok = 0;
 					--dif_offset;
@@ -52,14 +54,14 @@ void generate_maze (Maze *maze, int difficulty) {
 				ok = 0;
 			}
 			
-			if (ok == 0) {
+			if (ok == 0) { /* Means that the wall can be replace by an empty cell. */
 				maze->board[row][col].type = EMPTY;
 				maze->board[row][col].value = get_first_value(maze, row, col);
 				scan_neighbor(maze, row, col, maze->board[row][col].value);
 			}
 		}
 	}
-	/* Open the entrance and the exit  */
+	/* Open the entrance and the exit that are always at the same position */
 	maze->board[1][0].type = EMPTY;
 	maze->board[maze->rows-2][maze->cols-1].type = EMPTY;
 
@@ -115,18 +117,18 @@ int check_for_valid_wall_to_remove(Maze *maze, int row, int col, int more) {
 		}
 	}
 
-	if (nb_neighbors == 2) {
-		if (maze->board[row-1][col].type == EMPTY && maze->board[row+1][col].type == EMPTY) {
-			if (maze->board[row-1][col].value != maze->board[row+1][col].value) {
+	if (nb_neighbors == 2) { /* Can have exactly 3 neighbors */
+		if (maze->board[row-1][col].type == EMPTY && maze->board[row+1][col].type == EMPTY) { /* if neighbors are on the same col */
+			if (maze->board[row-1][col].value != maze->board[row+1][col].value) { /* Check for different value */
 				return 0;
-			} else if (more == 0) {
+			} else if (more == 0) { /* Means that we are trying to remove more walls (Hard difficulty) */
 				return 0;
 			}
 			return 1;
-		} else if (maze->board[row][col-1].type == EMPTY && maze->board[row][col+1].type == EMPTY) {
-			if (maze->board[row][col-1].value != maze->board[row][col+1].value) {
+		} else if (maze->board[row][col-1].type == EMPTY && maze->board[row][col+1].type == EMPTY) { /* if neighbors are on the same row */
+			if (maze->board[row][col-1].value != maze->board[row][col+1].value) { /* Check for different value */
 				return 0;
-			} else if (more == 0) {
+			} else if (more == 0) { /* Means that we are trying to remove more walls (Hard difficulty) */
 				return 0;
 			}
 			return 1;
