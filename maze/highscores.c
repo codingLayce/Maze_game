@@ -20,12 +20,11 @@
 
 List *load_highscores (Maze *maze) {
 	char path[MAX_NAME_SIZE+20];
+	char pseudo[MAX_PSEUDO_SIZE];
 	FILE *file;
 	List *list = NULL;
-	char pseudo[MAX_PSEUDO_SIZE];
-	int score;
+	int score, elements, i;
 	Highscore *previous;
-	int elements, i;
 
 	sprintf(path, "./saves/%s.score", maze->name);
 
@@ -33,7 +32,8 @@ List *load_highscores (Maze *maze) {
 	if (file == NULL) {
 		return NULL;
 	}
-	
+
+	/* The first line of the file is the number of elements written in the file */
 	fscanf(file, "%d", &elements);
 
 	for (i = 0; i < elements; i++){
@@ -83,9 +83,11 @@ void save_highscores (List *list, Maze *maze) {
 		exit(1);
 	}
 
+    /* First i write the number of elements to facilitate the load function */
 	fprintf(file, "%d\n", elements);
 
 	while (tmp != NULL) {
+	/* Then a loop through the scores and saves them 1 by line "<pseudo> <score>" */
 		fprintf(file, "%s %d\n", tmp->pseudo, tmp->score);
 		tmp = tmp->next_score;
 	}

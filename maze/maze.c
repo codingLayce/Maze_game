@@ -24,7 +24,7 @@ void display_maze (Maze *maze) {
 	int row, col;
 	for (row = 0; row < maze->rows; row++) {
 		for (col = 0; col < maze->cols; col++) {
-			if (maze->board[row][col].player != NULL) {
+			if (maze->board[row][col].player != NULL) { /* If the cell has a player on it */
 				display_player_color(maze->board[row][col]);
 				printf("%c%s", get_cell_skin(maze->board[row][col]), DEFAULT_COLOR);	
 			} else if (maze->board[row][col].type == WALL) {
@@ -33,7 +33,7 @@ void display_maze (Maze *maze) {
 				printf("%s%c%s", TREASURE_COLOR, get_cell_skin(maze->board[row][col]), DEFAULT_COLOR);
 			} else if (maze->board[row][col].type == TRAP) {
 				printf("%s%c%s", TRAP_COLOR, get_cell_skin(maze->board[row][col]), DEFAULT_COLOR);
-			} else if (maze->board[row][col].player == NULL) {
+			} else if (maze->board[row][col].player == NULL) { /* Otherwise it's an empty cell */
 				printf("%s%c%s", EMPTY_COLOR, get_cell_skin(maze->board[row][col]), DEFAULT_COLOR);
 			}
 		}
@@ -52,7 +52,7 @@ void init_maze(Maze *maze, int width, int height, int difficulty) {
 	for (row = 0; row < maze->rows; row++) {
 		for (col = 0; col < maze->cols; col++) {
 			Cell c;
-			if (row % 2 == 1 && col % 2 == 1) {
+			if (row % 2 == 1 && col % 2 == 1) { /* This condition is true one cell in two */
 				new_cell(&c, EMPTY, i);
 				i++;
 			} else {
