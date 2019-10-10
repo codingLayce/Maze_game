@@ -69,7 +69,7 @@ void menu_logic () {
 		case 4:
 			quit = 0;
 			break;
-		default: /* Normaly can't happen  */
+		default: /* Normally can't happen  */
 			menu_logic();
 			break;
 		}

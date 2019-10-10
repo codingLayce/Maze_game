@@ -21,11 +21,17 @@
 #include "../maze/player.h"
 #include "mover.h"
 
-int move_ghost(Maze *maze, Player *ghost) {
+void move_ghost(Maze *maze, Player *ghost) {
 	Direction dir;
 	int res;
+
 	dir  = get_random_dir();
 
+    /* Here my first approach was to pick a random direction while the movement isn't possible.
+     * The problem was that, in lot of cases (when only 1 or 2 directions are possibles), the function was very slow (2 or 3 seconds to return)
+     * So i've decided, instead of repicking a random direction each time it doesn't work, to pick one time a random direction
+     * and look for the next one until it's possible to move. The function is now so much faster and stay random.
+     */
 	do {
 		switch (dir) {
 			case UP:
@@ -50,8 +56,6 @@ int move_ghost(Maze *maze, Player *ghost) {
 
 		}
 	} while (res == 1);
-	
-	return 1;
 }
 
 int move_ghost_up (Maze *maze, Player *ghost) {

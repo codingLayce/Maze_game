@@ -1,21 +1,30 @@
 #ifndef UTILS_H_GUARD
 #define UTILS_H_GUARD
 
-/* Function that copy the string sender in the receiver string.
+/* Copy the string sender into the receiver.
+ * @param receiver String to fill with the sender
+ * @param sender to copy into the receiver
+ * @param nb_char number of characters to copy (length of sender or a part)
  */
 void copy_string (char *receiver, const char *sender, size_t nb_char);
 
-/* Function that wait the user to enter an int.
- * Returns -1 if an error occured or if the user enter something else than a int.
+/* Reads an int entered by the user.
+ * @return the int entered by the user
  */
 int read_int();
 
+/* Reads a char entered by the user.
+ * @return the char entered by the user.
+ */
 char read_char();
 
-/* Function that clear the buffer by reading all the inputs until the end.
+/* Clears the buffer by reading all the inputs until the end.
  */
 void clear_buffer();
 
+/* Reads only one key and returns.
+ * @return the key pressed (ASCII char)
+ */
 char read_key();
 
 #endif

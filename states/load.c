@@ -26,10 +26,10 @@ void load_maze (Maze *maze) {
 	DIR *saves_folder;
 	int i = 0;
 	int choice;
-	/* I am counting the number of existing files in the saves folder to allocate dinamicaly the memory.  */
+	/* I am counting the number of existing files in the saves folder to allocate the memory.  */
 	int nb_saves = get_nb_of_files_in_dir("./saves");
 	/* I reserve the right space to save the dirent structure. 
-	 * I doing it this way becase for me it's easier to understand.
+	 * I doing it this way because for me it's easier to understand.
 	 * And to retrieve the file i'll just have to make "saves[<choice>-1]". 
 	 */
 	struct dirent **saves = calloc(nb_saves, sizeof(struct dirent*));
@@ -41,12 +41,12 @@ void load_maze (Maze *maze) {
 
 		saves_folder = opendir("./saves");
 		if (saves_folder) {
-			struct dirent *file;
-			while ((file = readdir(saves_folder)) != NULL) {
-				if (strcmp(file->d_name, ".") != 0 && strcmp(file->d_name, "..") != 0) {
+	    	struct dirent *file;
+			while ((file = readdir(saves_folder)) != NULL) { /* For each file in the folder */
+				if (strcmp(file->d_name, ".") != 0 && strcmp(file->d_name, "..") != 0) { /* Exclude . and .. */
 					char *point = file->d_name + sizeof(file->d_name);
-					if ((point = strrchr(file->d_name, '.')) != NULL) {
-						if (strcmp(point, ".cfg") == 0) {
+					if ((point = strrchr(file->d_name, '.')) != NULL) { /* Move the cursor point to the '.' character if exist */
+						if (strcmp(point, ".cfg") == 0) { /* Check for .cfg extension */
 							printf("%d - %s\n", i+1, file->d_name);
 							saves[i] = file;
 							i++;
@@ -90,6 +90,7 @@ int get_nb_of_files_in_dir (char *path) {
 	int n = 0;
 	DIR *dir;
 
+    /* Same logic that in the load_maze function */
 	dir = opendir(path);
 	if (dir) {
 		struct dirent *f;

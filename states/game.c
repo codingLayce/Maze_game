@@ -65,7 +65,7 @@ void play (Maze *maze) {
 				res = move_player_left(maze, &player);
 				break;
 			default:
-				res = 1;
+				res = 1; /* Mean that the player hasn't moved */
 				break;
 		}
 
@@ -81,9 +81,9 @@ void play (Maze *maze) {
 		system(CLEAR_COMMAND);
 	} while (player_on_exit(maze, &player) != 0 && exit != 0);
 
-	if (exit == 0) { /* Player hit a monster  */
+	if (exit == 0) { /* Player hit a monster, so highscore possible  */
 		printf(DEFEAT_TEXT);	
-	} else {
+	} else { /* Player wins, checking for highscore */
 		scores = check_for_best_score(maze, scores, score);
 	}
 
@@ -105,21 +105,26 @@ List *check_for_best_score (Maze *maze, List *list, int score) {
 	if (list == NULL) {
 		ok = 0;
 	} else {
-		if (nb_elements(list) < 10)  {
-			index = nb_elements(list) -1;
-			ok = 0;
-		}
-		tmp = list->best;
-		while (tmp != NULL) {
-			if (ok == 1 && score < tmp->score) {
-				ok = 0;
-				index = i;
-			}
-			tmp = tmp->next_score;
-			i++;
-		}
-		if (index >= 10) { /* In case of the index is out of the array size  */
-			ok = 1;
+	    if (nb_elements(list) == 0) {
+	        index = 0;
+	        ok = 0;
+	    } else { /* Search the index where the highscore can be put */
+            tmp = list->best;
+            while (tmp != NULL) {
+                if (ok == 1 && score < tmp->score) {
+                    ok = 0;
+                    index = i;
+                }
+                tmp = tmp->next_score;
+                i++;
+            }
+            if (score == 1 && nb_elements(list) < 10)  { /* If no index has been found, it means that the highscore is the worst one */
+                index = nb_elements(list) -1;
+                ok = 0;
+            }
+            if (index >= 10) { /* In case of the index is out of the array size  */
+                ok = 1;
+            }
 		}
 	}
 
