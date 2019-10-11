@@ -1,7 +1,10 @@
 all: maze
 
-maze: labyrinthe.o utils.o cell.o maze.o startup.o menu.o creator.o mcreator.o load.o game.o player.o mover.o player_mover.o highscores.o ghost_mover.o
+maze: labyrinthe.o config.o utils.o cell.o maze.o menu.o creator.o mcreator.o load.o game.o player.o mover.o player_mover.o highscores.o ghost_mover.o
 	gcc -o labyrinthe -g .pkg/*.o
+
+config.o: utils/config.c
+	gcc -o .pkg/config.o -g -c utils/config.c -W -Wall -ansi -pedantic
 
 ghost_mover.o: movements/ghost_mover.c
 	gcc -o .pkg/ghost_mover.o -g -c movements/ghost_mover.c -W -Wall -ansi -pedantic
@@ -32,9 +35,6 @@ creator.o: states/creator.c
 
 menu.o: states/menu.c
 	gcc -o .pkg/menu.o -g -c states/menu.c -W -Wall -ansi -pedantic
-
-startup.o: utils/startup.c
-	gcc -o .pkg/startup.o -g -c utils/startup.c -W -Wall -ansi -pedantic
 
 cell.o: maze/cell.c
 	gcc -o .pkg/cell.o -g -c maze/cell.c -W -Wall -ansi -pedantic

@@ -23,13 +23,6 @@
 #include "game.h"
 #include "../utils/config.h"
 
-const char* CHOICES[4] = {
-	CREATE_MAZE_TEXT,
-	LOAD_MAZE_TEXT,
-	PLAY_TEXT,
-	QUIT_TEXT
-};
-
 void menu_logic () {
 	int choice;
 	int load = 0, quit = 1;
@@ -40,25 +33,25 @@ void menu_logic () {
 		do {
 			display_choices();
 			choice = read_int();
-		} while (choice < 0 || choice > (int)(sizeof(CHOICES) / sizeof(CHOICES[0])));
+		} while (choice < 0 || choice > 4);
 
 		switch (choice) {
 		case 1:
 			create_labyrinthe(&loaded_maze);
 			load = 1;
 			system(CLEAR_COMMAND);
-			printf(LOADED_MAZE_TEXT);
+			printf("%s", LOADED_MAZE_TEXT);
 			break;
 		case 2:
 			load_maze(&loaded_maze);
 			load = 1;
 			system(CLEAR_COMMAND);
-			printf(LOADED_MAZE_TEXT);
+			printf("%s", LOADED_MAZE_TEXT);
 			break;
 		case 3:
 			if (load != 1) {
 				system(CLEAR_COMMAND);
-				printf(ERROR_NO_MAZE_LOADED);
+				printf("%s", ERROR_NO_MAZE_LOADED);
 			} else {
 				play(&loaded_maze);
 				sprintf(name, "%s.cfg",loaded_maze.name);
@@ -79,9 +72,8 @@ void menu_logic () {
 }
 
 void display_choices() {
-	size_t nb_choice = sizeof(CHOICES) / sizeof(CHOICES[0]);
-	size_t i;
-	for (i = 0; i < nb_choice; i++) {
-		printf("%ld - %s\n", i+1, CHOICES[i]);
-	}	
+	printf("%d - %s\n", 1, CREATE_MAZE_TEXT);
+	printf("%d - %s\n", 2, LOAD_MAZE_TEXT);
+	printf("%d - %s\n", 3, PLAY_TEXT);
+	printf("%d - %s\n", 4, QUIT_TEXT);
 }

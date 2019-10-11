@@ -46,7 +46,7 @@ void play (Maze *maze) {
 		printf("\n");
 		display_list(scores);
 		printf("\n");
-		printf(TOP_OF_GAME_TEXT);
+		printf("%s", TOP_OF_GAME_TEXT);
 		printf("%s%d\n", GAME_SCORE_TEXT, score);
 		display_maze(maze);
 		c = read_char();
@@ -82,7 +82,7 @@ void play (Maze *maze) {
 	} while (player_on_exit(maze, &player) != 0 && exit != 0);
 
 	if (exit == 0) { /* Player hit a monster, so highscore possible  */
-		printf(DEFEAT_TEXT);	
+		printf("%s", DEFEAT_TEXT);	
 	} else { /* Player wins, checking for highscore */
 		scores = check_for_best_score(maze, scores, score);
 	}
@@ -90,7 +90,7 @@ void play (Maze *maze) {
 	display_maze(maze);	
 	display_list(scores);
 	unload_list(scores);
-	printf(PRESS_RETURN_TEXT);
+	printf("%s", PRESS_RETURN_TEXT);
 	read_key();
 }	
 
@@ -129,8 +129,8 @@ List *check_for_best_score (Maze *maze, List *list, int score) {
 	}
 
 	if (ok == 0) {
-		printf(NEW_HIGHSCORE_TEXT);
-		printf(ENTER_PSEUDO_TEXT);
+		printf("%s", NEW_HIGHSCORE_TEXT);
+		printf("%s", ENTER_PSEUDO_TEXT);
 		scanf("%20s", pseudo);
 
 		new->score = score;

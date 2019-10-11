@@ -1,4 +1,11 @@
-/**
+#!/bin/bash
+
+find ./ -name '*.c' > ./all.txt 
+
+while IFS="" read -r line || [ -n "$p" ]
+do
+	echo $line
+echo "/**
 * ENSICAEN
 * 6 Boulevard Maréchal Juin
 * F-14050 Caen Cedex
@@ -11,19 +18,6 @@
 * @version 1.0
 *
 */
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "states/menu.h"
-#include "utils/config.h"
-
-int main (int argc, char *argv[]) {
-	if (check_for_config_params(argc, argv) == 1) { /* If no arguments the default lang is FRENCH  */
-		load_lang_fr();
-	}
-
-	menu_logic();
-
-	return 0;
-}
+" | cat - $line > ./tmp.c
+	mv tmp.c $line
+done < ./all.txt

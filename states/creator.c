@@ -30,7 +30,7 @@ void create_labyrinthe(Maze *maze) {
 	height = ask_for_height();
 	difficulty = ask_for_difficulty();
 
-	printf(ENTER_MAZE_NAME_TEXT);
+	printf("%s", ENTER_MAZE_NAME_TEXT);
 	scanf("%30s", name);
 	copy_string(maze->name, name, sizeof(name));
 
@@ -43,7 +43,7 @@ void create_labyrinthe(Maze *maze) {
 	printf("Saving the maze in the file saves/%s.cfg\n", name);
 	save_maze(maze, name);
 
-	printf(PRESS_RETURN_TEXT);
+	printf("%s", PRESS_RETURN_TEXT);
 	read_key();	
 }
 
@@ -74,7 +74,7 @@ void save_maze (Maze *maze, char *name) {
 int ask_for_width() {
 	int width;
 	do {
-		printf(ENTER_MAZE_WIDTH_TEXT);
+		printf("%s", ENTER_MAZE_WIDTH_TEXT);
 		width = read_int();
 	} while (check_for_valid_width(width) == 1);
 	return width;
@@ -96,7 +96,7 @@ int check_for_valid_width(int width) {
 int ask_for_height() {
 	int height;
 	do {
-		printf(ENTER_MAZE_HEIGHT_TEXT);
+		printf("%s", ENTER_MAZE_HEIGHT_TEXT);
 		height = read_int();
 	} while (check_for_valid_height(height) == 1);
 	return height;
@@ -118,7 +118,7 @@ int check_for_valid_height(int height) {
 int ask_for_difficulty() {
 	int dif;
 	do {
-		printf(ENTER_MAZE_DIFFICULTY_TEXT);
+		printf("%s", ENTER_MAZE_DIFFICULTY_TEXT);
 		dif = read_int();
 	} while (check_for_valid_difficulty(dif) == 1);
 	return dif;
