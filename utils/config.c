@@ -16,7 +16,7 @@ int check_for_config_params(int argc, char **argv) {
 					load_lang_fr();	
 					return 0;
 				} else if (strcmp(lang, "en") == 0) {
-				    load_lang_english();
+				    load_lang_en();
 				    return 0;
 				}
 			}
@@ -81,8 +81,8 @@ void load_lang_fr() {
 	DEFEAT_TEXT = "Vous avez été attrapé par un monstre !\n";
 }
 
-void load_lang_english() {
-CREATE_MAZE_TEXT = malloc(sizeof(char) * strlen("Create a maze"));
+void load_lang_en() {
+	CREATE_MAZE_TEXT = malloc(sizeof(char) * strlen("Create a maze"));
 	CREATE_MAZE_TEXT = "Create a maze";
 
 	LOAD_MAZE_TEXT = malloc(sizeof(char) * strlen("Load a maze"));
