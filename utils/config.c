@@ -15,6 +15,9 @@ int check_for_config_params(int argc, char **argv) {
 				if (strcmp(lang, "fr") == 0) {
 					load_lang_fr();	
 					return 0;
+				} else if (strcmp(lang, "en") == 0) {
+				    load_lang_english();
+				    return 0;
 				}
 			}
 		}
@@ -76,4 +79,60 @@ void load_lang_fr() {
 
 	DEFEAT_TEXT = malloc(sizeof(char) * strlen("Vous avez été attrapé par un monstre !\n"));
 	DEFEAT_TEXT = "Vous avez été attrapé par un monstre !\n";
+}
+
+void load_lang_english() {
+CREATE_MAZE_TEXT = malloc(sizeof(char) * strlen("Create a maze"));
+	CREATE_MAZE_TEXT = "Create a maze";
+
+	LOAD_MAZE_TEXT = malloc(sizeof(char) * strlen("Load a maze"));
+	LOAD_MAZE_TEXT = "Load a maze";
+
+	PLAY_TEXT = malloc(sizeof(char) * strlen("Play"));
+	PLAY_TEXT = "Play";
+
+	QUIT_TEXT = malloc(sizeof(char) * strlen("Quit"));
+	QUIT_TEXT = "Quit";
+
+	LOADED_MAZE_TEXT = malloc(sizeof(char) * strlen("A maze has been loaded!\n"));
+	LOADED_MAZE_TEXT = "A maze has been loaded !\n";
+
+	ERROR_NO_MAZE_LOADED = malloc(sizeof(char) * strlen("You have to create or load a maze before play !\n"));
+	ERROR_NO_MAZE_LOADED = "You have to create or load a maze before play !\n";
+
+	ENTER_MAZE_NAME_TEXT = malloc(sizeof(char) * strlen("Enter a name for the maze (no spaces):\n"));
+	ENTER_MAZE_NAME_TEXT = "Enter a name for the maze (no spaces):\n";
+
+	ENTER_MAZE_WIDTH_TEXT = malloc(sizeof(char) * strlen("Enter the maze width:\n"));
+	ENTER_MAZE_WIDTH_TEXT = "Enter the maze width:\n";
+
+	ENTER_MAZE_HEIGHT_TEXT = malloc(sizeof(char) * strlen("Enter the maze height:\n"));
+	ENTER_MAZE_HEIGHT_TEXT = "Enter the maze height:\n";
+
+	GAME_SCORE_TEXT = malloc(sizeof(char) * strlen("Current score: "));
+	GAME_SCORE_TEXT = "Current score: ";
+
+	TOP_OF_GAME_TEXT = malloc(sizeof(char) * strlen("Try to get the lowest score !\n"));
+	TOP_OF_GAME_TEXT = "Try to get the lowest score !\n";
+
+	MAZE_NAME_TEXT = malloc(sizeof(char) * strlen("You are playing the maze "));
+	MAZE_NAME_TEXT = "You are playing the maze ";
+
+	MAZE_HIGHSCORE_TEXT = malloc(sizeof(char) * strlen("The maze record is "));
+	MAZE_HIGHSCORE_TEXT = "The maze record is ";
+
+	NEW_HIGHSCORE_TEXT = malloc(sizeof(char) * strlen("Your score is part of the 10 best !\n"));
+	NEW_HIGHSCORE_TEXT = "Your score is part of the 10 best !\n";
+
+	ENTER_PSEUDO_TEXT = malloc(sizeof(char) * strlen("Enter your pseudo:\n"));
+	ENTER_PSEUDO_TEXT = "Enter your pseudo:\n";
+
+	ENTER_MAZE_DIFFICULTY_TEXT = malloc(sizeof(char) * strlen("Select a difficulty (1: EASY 2: HARD):\n"));
+	ENTER_MAZE_DIFFICULTY_TEXT = "Select a difficulty (1: EASY 2: HARD):\n";
+
+	PRESS_RETURN_TEXT = malloc(sizeof(char) * strlen("Press enter key...\n"));
+	PRESS_RETURN_TEXT = "Press enter key...\n";
+
+	DEFEAT_TEXT = malloc(sizeof(char) * strlen("A monster caught you !\n"));
+	DEFEAT_TEXT = "A monster caught you !\n";
 }

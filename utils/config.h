@@ -1,16 +1,13 @@
 #ifndef CONFIG_H_GUARD
 #define CONFIG_H_GUARD
 
-/* Solution found on stackoverflow: https://stackoverflow.com/questions/5459868/concatenate-int-to-string-using-c-preprocessor  */
-#define STR_HELPER(x) #x
-#define STR(x) STR_HELPER(x)
-
 #define MAZE_MAX_ROWS 39
 #define MAZE_MAX_COLS 59
 
 #define MAX_NAME_SIZE 30
 #define MAX_PSEUDO_SIZE 20
 
+/* The command to clear the console isn't the same on Unix system and Windows system */
 #if defined(_WIN32)
 #define CLEAR_COMMAND "cls"
 
@@ -53,9 +50,19 @@ const char *ENTER_MAZE_DIFFICULTY_TEXT;
 const char *PRESS_RETURN_TEXT;
 const char *DEFEAT_TEXT;
 
-
+/* Checks if there is a "-lang" arguments, if so call the loading function corresponding to the lang or return.
+ * @param argc number of arguments passed on startup
+ * @param argv list of arguments passed on startup
+ * @return 0 is a lang has been loaded, 1 otherwise
+ */
 int check_for_config_params(int argc, char **argv);
 
+/* Loads the french texts.
+ */
 void load_lang_fr();
+
+/* Loads the english texts.
+ */
+void load_lang_en();
 
 #endif
