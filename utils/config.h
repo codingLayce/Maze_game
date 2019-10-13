@@ -23,6 +23,7 @@ static const int NUMBER_OF_TREASURE = 2;
 
 static const char PATH_TO_SAVES[8] = "./saves/";
 
+/* Console colors constants */
 static const char WALL_COLOR[11] = "\033[35;45m";
 static const char EMPTY_COLOR[11] = "\033[107m";
 static const char PLAYER_COLOR[11] = "\033[34;44m";
@@ -31,6 +32,7 @@ static const char TREASURE_COLOR[11] = "\033[32;42m";
 static const char TRAP_COLOR[11] = "\033[31;41m";
 static const char DEFAULT_COLOR[11] = "\033[39;49m";
 
+/* All texts displayed on the console (will be initialized in the load_lang_<lang> function */
 const char *CREATE_MAZE_TEXT;
 const char *LOAD_MAZE_TEXT;
 const char *PLAY_TEXT;
