@@ -68,7 +68,7 @@ void save_highscores (List *list, Maze *maze) {
 	int elements;
 
 	if (list == NULL || list->best == NULL) {
-		fprintf(stderr, "\n Error list is empty\n");
+		fprintf(stderr, "\n%s\n", ERROR_NULL_LIST);
 		return;
 	}
 
@@ -79,7 +79,7 @@ void save_highscores (List *list, Maze *maze) {
 
 	file = fopen(path, "w+");
 	if (file == NULL) {
-		fprintf(stderr, "\n Error while opening the file\n");
+		fprintf(stderr, "\n%s\n", ERROR_OPENING_FILE);
 		exit(1);
 	}
 
@@ -163,7 +163,7 @@ void display_list (List *list) {
 	int i = 1;
 
 	if (list == NULL || list->best == NULL) {
-		printf("Pas encore de highscores !\n");
+		printf("%s\n", ERROR_NO_HIGHSCORE);
 		return;
 	}
 

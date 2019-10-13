@@ -21,6 +21,7 @@
 #include "load.h"
 #include "../maze/maze.h"
 #include "../utils/utils.h"
+#include "../utils/config.h"
 
 void load_maze (Maze *maze) {
 	DIR *saves_folder;
@@ -35,8 +36,8 @@ void load_maze (Maze *maze) {
 	struct dirent **saves = calloc(nb_saves, sizeof(struct dirent*));
 
 	do {
-		system("clear");
-		printf("Choisissez un labyrinthe parmis les fichiers suivants:\n");	
+		system(CLEAR_COMMAND);
+		printf("%s\n", SELECT_MAZE_TEXT);
 		i = 0;	
 
 		saves_folder = opendir("./saves");
@@ -73,13 +74,13 @@ void load_file (Maze *maze, char *name) {
 
 	file = fopen(path, "r");
 	if (file == NULL) {
-		fprintf(stderr, "\nError while openning file\n");
+		fprintf(stderr, "\n%s\n", ERROR_OPENING_FILE);
 		exit(1);
 	}
 
 	fread(maze, sizeof(Maze), 1, file);
 	if (maze == NULL) {
-		fprintf(stderr, "\nError while reading the file\n");
+		fprintf(stderr, "\n%s\n", ERROR_READING_FILE);
 		exit(1);
 	}
 

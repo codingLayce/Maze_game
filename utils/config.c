@@ -79,6 +79,30 @@ void load_lang_fr() {
 
 	DEFEAT_TEXT = malloc(sizeof(char) * strlen("Vous avez été attrapé par un monstre !\n"));
 	DEFEAT_TEXT = "Vous avez été attrapé par un monstre !\n";
+
+	ERROR_NULL_LIST = malloc(sizeof(char) * strlen("Erreur: La liste est vide"));
+	ERROR_NULL_LIST = "Erreur: La liste est vide";
+
+	ERROR_OPENING_FILE = malloc(sizeof(char) * strlen("Error: Impossible d'ouvrir le fichier"));
+	ERROR_OPENING_FILE = "Error: Impossible d'ouvrir le fichier";
+
+	ERROR_NO_HIGHSCORE = malloc(sizeof(char) * strlen("Erreur: Pas de highscore"));
+	ERROR_NO_HIGHSCORE = "Erreur: Pas de highscore":
+
+	MAZE_GENERATED_TEXT = malloc(sizeof(char) * strlen("Ce labyrinthe a été généré: "));
+	MAZE_GENERATED_TEXT = "Ce labyrinthe a été généré: ";
+
+	SAVING_MAZE_TEXT = malloc(sizeof(char) * strlen("Sauvegarde du labyrinthe dans le fichier saves/"));
+    SAVING_MAZE_TEXT = "Sauvegarde du labyrinthe dans le fichier saves/";
+
+    ERROR_WRITING_FILE = malloc(sizeof(char) * strlen("Erreur: Ecriture dans le fichier"));
+    ERROR_WRITING_FILE = "Erreur: Ecriture dans le fichier";
+
+    SELECT_MAZE_TEXT = malloc(sizeof(char) * strlen("Choisissez un labyrinthe parmis les fichiers suivants:"));
+    SELECT_MAZE_TEXT = "Choisissez un labyrinthe parmis les fichiers suivants:";
+
+    ERROR_READING_FILE = malloc(sizeof(char) * strlen("Erreur: Lecture du fichier"));
+    ERROR_READING_FILE = "Erreur: Lecture du fichier";
 }
 
 void load_lang_en() {
@@ -135,4 +159,28 @@ void load_lang_en() {
 
 	DEFEAT_TEXT = malloc(sizeof(char) * strlen("A monster caught you !\n"));
 	DEFEAT_TEXT = "A monster caught you !\n";
+
+	ERROR_NULL_LIST = malloc(sizeof(char) * strlen("Error: Empty list"));
+	ERROR_NULL_LIST = "Error: Empty list";
+
+	ERROR_OPENING_FILE = malloc(sizeof(char) * strlen("Error: Impossible to open the file"));
+	ERROR_OPENING_FILE = "Error: Impossible to open the file";
+
+	ERROR_NO_HIGHSCORE = malloc(sizeof(char) * strlen("Error: No highscore"));
+	ERROR_NO_HIGHSCORE = "Error: No highscore":
+
+	MAZE_GENERATED_TEXT = malloc(sizeof(char) * strlen("This maze has been generated: "));
+	MAZE_GENERATED_TEXT = "This maze has been generated: ";
+
+	SAVING_MAZE_TEXT = malloc(sizeof(char) * strlen("Saving the maze in the file saves/"));
+    SAVING_MAZE_TEXT = "Saving the maze in the file saves/";
+
+    ERROR_WRITING_FILE = malloc(sizeof(char) * strlen("Error: Writing in the file"));
+    ERROR_WRITING_FILE = "Error: Writing in the file";
+
+    SELECT_MAZE_TEXT = malloc(sizeof(char) * strlen("Select a maze from the list below:"));
+    SELECT_MAZE_TEXT = "Select a maze from the list below:";
+
+    ERROR_READING_FILE = malloc(sizeof(char) * strlen("Error: Reading the file"));
+    ERROR_READING_FILE = "Error: Reading the file";
 }

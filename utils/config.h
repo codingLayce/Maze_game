@@ -49,6 +49,14 @@ const char *ENTER_PSEUDO_TEXT;
 const char *ENTER_MAZE_DIFFICULTY_TEXT;
 const char *PRESS_RETURN_TEXT;
 const char *DEFEAT_TEXT;
+const char *ERROR_NULL_LIST;
+const char *ERROR_OPENING_FILE;
+const char *ERROR_NO_HIGHSCORE;
+const char *MAZE_GENERATED_TEXT;
+const char *SAVING_MAZE_TEXT;
+const char *ERROR_WRITING_FILE;
+const char *SELECT_MAZE_TEXT;
+const char *ERROR_READING_FILE;
 
 /* Checks if there is a "-lang" arguments, if so call the loading function corresponding to the lang or return.
  * @param argc number of arguments passed on startup

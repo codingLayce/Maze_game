@@ -37,10 +37,10 @@ void create_labyrinthe(Maze *maze) {
 	init_maze(maze, width, height, difficulty);
 	generate_maze(maze, difficulty);
 	
-	printf("This maze has been generated: \n");
+	printf("%s\n", MAZE_GENERATED_TEXT);
 	display_maze(maze);
 
-	printf("Saving the maze in the file saves/%s.cfg\n", name);
+	printf("%s%s.cfg\n", SAVING_MAZE_TEXT, name);
 	save_maze(maze, name);
 
 	printf("%s", PRESS_RETURN_TEXT);
@@ -56,7 +56,7 @@ void save_maze (Maze *maze, char *name) {
 	
 	out = fopen(path, "w+");
 	if (out == NULL) {
-		fprintf(stderr, "\nError while opening the file %s\n", path);
+		fprintf(stderr, "\n%s %s\n", ERROR_OPENING_FILE, path);
 		exit(1);
 	}
 
@@ -64,7 +64,7 @@ void save_maze (Maze *maze, char *name) {
 	if (n != 0) {
 		printf("file saved !\n");
 	} else {
-		fprintf(stderr, "\nError while writing file !\n");
+		fprintf(stderr, "\n%s\n", ERROR_WRITING_FILE);
 		exit(1);
 	}
 
