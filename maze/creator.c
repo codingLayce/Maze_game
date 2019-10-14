@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 #include "maze.h"
 #include "creator.h"
@@ -71,9 +72,11 @@ void generate_maze (Maze *maze, int difficulty) {
 
 void generate_treasures(Maze *maze) {
 	Cell *c = malloc(sizeof(Cell));
+	const int nb_empty_cells = (floor(maze->rows/2) * floor(maze->cols/2)) + (floor(maze->rows/2) * floor(maze->cols/2 - 1));
+	const int nb_treasure = floor(nb_empty_cells * TREASURE_RATIO);
 	int i;
 
-	for (i = 0; i < NUMBER_OF_TRAPS; ++i) {
+	for (i = 0; i < nb_treasure; ++i) {
 		c = get_random_cell_with_type(maze, EMPTY);
 		c->type = TREASURE;
 	}
@@ -81,9 +84,11 @@ void generate_treasures(Maze *maze) {
 
 void generate_traps(Maze *maze) {	
 	Cell *c = malloc(sizeof(Cell));
+	const int nb_empty_cells = (floor(maze->rows/2) * floor(maze->cols/2)) + (floor(maze->rows/2) * floor(maze->cols/2 - 1));
+	const int nb_traps = floor(nb_empty_cells * TRAPS_RATIO);
 	int i;
 
-	for (i = 0; i < NUMBER_OF_TRAPS; ++i) {
+	for (i = 0; i < nb_traps; ++i) {
 		c = get_random_cell_with_type(maze, EMPTY);
 		c->type = TRAP;
 	}

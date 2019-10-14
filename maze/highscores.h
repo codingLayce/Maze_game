@@ -40,6 +40,13 @@ List *load_highscores (Maze *maze);
  */
 List *insert_highscore (List *list, Highscore *score, int index);
 
+/* Checks if the score can be put in the 10 best list.
+ * @param list containing the 10 best highscores
+ * @param score the score value
+ * @return -1 if the score can't be put in the list otherwise the index [0-9]
+ */
+int get_insertion_index(List *list, int score);
+
 /* Counts the number of elements inside the list
  * @param list to count
  * @return the number of elements

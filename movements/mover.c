@@ -23,7 +23,7 @@
 void move_up (Maze *maze, Player *player, int step) {
 	int p_row = player->current_row;
 	int p_col = player->current_col;
-
+	
 	set_player(&maze->board[p_row][p_col], NULL);
 	set_player(&maze->board[p_row-step][p_col], player);
 	player->current_row -= step;

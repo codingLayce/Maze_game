@@ -18,8 +18,9 @@
 static const int STEP_SCORE = 10;
 static const int TREASURE_SCORE = -50;
 static const int TRAP_SCORE = 50;
-static const int NUMBER_OF_TRAPS = 2;
-static const int NUMBER_OF_TREASURE = 2;
+static const double TRAPS_RATIO = 0.05;
+static const double TREASURE_RATIO = 0.05;
+static const double GHOST_RATIO = 0.002;
 
 static const char PATH_TO_SAVES[8] = "./saves/";
 
@@ -33,32 +34,32 @@ static const char TRAP_COLOR[11] = "\033[31;41m";
 static const char DEFAULT_COLOR[11] = "\033[39;49m";
 
 /* All texts displayed on the console (will be initialized in the load_lang_<lang> function */
-const char *CREATE_MAZE_TEXT;
-const char *LOAD_MAZE_TEXT;
-const char *PLAY_TEXT;
-const char *QUIT_TEXT;
-const char *LOADED_MAZE_TEXT;
-const char *ERROR_NO_MAZE_LOADED;
-const char *ENTER_MAZE_NAME_TEXT;
-const char *ENTER_MAZE_WIDTH_TEXT;
-const char *ENTER_MAZE_HEIGHT_TEXT;
-const char *GAME_SCORE_TEXT;
-const char *TOP_OF_GAME_TEXT;
-const char *MAZE_NAME_TEXT;
-const char *MAZE_HIGHSCORE_TEXT;
-const char *NEW_HIGHSCORE_TEXT;
-const char *ENTER_PSEUDO_TEXT;
-const char *ENTER_MAZE_DIFFICULTY_TEXT;
-const char *PRESS_RETURN_TEXT;
-const char *DEFEAT_TEXT;
-const char *ERROR_NULL_LIST;
-const char *ERROR_OPENING_FILE;
-const char *ERROR_NO_HIGHSCORE;
-const char *MAZE_GENERATED_TEXT;
-const char *SAVING_MAZE_TEXT;
-const char *ERROR_WRITING_FILE;
-const char *SELECT_MAZE_TEXT;
-const char *ERROR_READING_FILE;
+char *CREATE_MAZE_TEXT;
+char *LOAD_MAZE_TEXT;
+char *PLAY_TEXT;
+char *QUIT_TEXT;
+char *LOADED_MAZE_TEXT;
+char *ERROR_NO_MAZE_LOADED;
+char *ENTER_MAZE_NAME_TEXT;
+char *ENTER_MAZE_WIDTH_TEXT;
+char *ENTER_MAZE_HEIGHT_TEXT;
+char *GAME_SCORE_TEXT;
+char *TOP_OF_GAME_TEXT;
+char *MAZE_NAME_TEXT;
+char *MAZE_HIGHSCORE_TEXT;
+char *NEW_HIGHSCORE_TEXT;
+char *ENTER_PSEUDO_TEXT;
+char *ENTER_MAZE_DIFFICULTY_TEXT;
+char *PRESS_RETURN_TEXT;
+char *DEFEAT_TEXT;
+char *ERROR_NULL_LIST;
+char *ERROR_OPENING_FILE;
+char *ERROR_NO_HIGHSCORE;
+char *MAZE_GENERATED_TEXT;
+char *SAVING_MAZE_TEXT;
+char *ERROR_WRITING_FILE;
+char *SELECT_MAZE_TEXT;
+char *ERROR_READING_FILE;
 
 /* Checks if there is a "-lang" arguments, if so call the loading function corresponding to the lang or return.
  * @param argc number of arguments passed on startup
@@ -74,5 +75,9 @@ void load_lang_fr();
 /* Loads the english texts.
  */
 void load_lang_en();
+
+/* Free the memory for the texts.
+ */
+void free_config();
 
 #endif

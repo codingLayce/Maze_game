@@ -25,5 +25,7 @@ int main (int argc, char *argv[]) {
 
 	menu_logic();
 
+	free_config();
+
 	return 0;
 }

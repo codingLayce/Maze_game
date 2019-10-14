@@ -1,16 +1,16 @@
 /**
-* ENSICAEN
-* 6 Boulevard Maréchal Juin
-* F-14050 Caen Cedex
-*
-* This file is owned by ENSICAEN students. No portion of this
-* documents may be reproduced, copied or revised without written
-* permission of the authors.
-*
-* @author Lucas Guilbert <lguilbert@ecole.ensicaen.fr>
-* @version 1.0
-*
-*/
+ * ENSICAEN
+ * 6 Boulevard Maréchal Juin
+ * F-14050 Caen Cedex
+ *
+ * This file is owned by ENSICAEN students. No portion of this
+ * documents may be reproduced, copied or revised without written
+ * permission of the authors.
+ *
+ * @author Lucas Guilbert <lguilbert@ecole.ensicaen.fr>
+ * @version 1.0
+ *
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,7 +38,7 @@ List *load_highscores (Maze *maze) {
 
 	for (i = 0; i < elements; i++){
 		Highscore *tmp = malloc(sizeof(*tmp));
-		
+
 		fscanf(file, "%s", pseudo);
 		fscanf(file, "%d", &score);
 
@@ -83,11 +83,11 @@ void save_highscores (List *list, Maze *maze) {
 		exit(1);
 	}
 
-    /* First i write the number of elements to facilitate the load function */
+	/* First i write the number of elements to facilitate the load function */
 	fprintf(file, "%d\n", elements);
 
 	while (tmp != NULL) {
-	/* Then a loop through the scores and saves them 1 by line "<pseudo> <score>" */
+		/* Then a loop through the scores and saves them 1 by line "<pseudo> <score>" */
 		fprintf(file, "%s %d\n", tmp->pseudo, tmp->score);
 		tmp = tmp->next_score;
 	}
@@ -104,8 +104,8 @@ List *insert_highscore (List *list, Highscore *score, int index) {
 		list->best = NULL;
 	}
 
-	tmp = get_highscore(list, index);
-	
+	tmp = get_highscore(list, index-1);
+
 	if (tmp == NULL) {
 		list->best = score;
 	} else if (index == 0) {
@@ -127,7 +127,7 @@ List *insert_highscore (List *list, Highscore *score, int index) {
 int nb_elements (List *list) {
 	int i = 0;
 	Highscore *tmp;
-	
+
 	if (list == NULL || list->best == NULL) {
 		return -1;
 	}
@@ -144,11 +144,13 @@ int nb_elements (List *list) {
 
 Highscore *get_highscore (List *list, int index) {
 	int i = 0;
-	Highscore *tmp = list->best;
+	Highscore *tmp;
 
 	if (list == NULL || list->best == NULL) {
 		return NULL;
 	}
+
+	tmp = list->best;
 
 	while (i < index) {
 		tmp = tmp->next_score;
@@ -193,4 +195,30 @@ void unload_list (List *list) {
 	}
 
 	free(list);
+}
+int get_insertion_index(List *list, int score) {
+	int i = 0;
+	Highscore *tmp;
+
+	if (list == NULL) {
+		return 0;
+	} else {
+		if (nb_elements(list) == 0) {
+			return 0;
+		} else { /* Search the index where the highscore can be put */
+			tmp = list->best;
+			while (tmp != NULL) {
+				if (score < tmp->score && i < 10) {
+					return i;
+				}
+				tmp = tmp->next_score;
+				i++;
+			}
+			if (nb_elements(list) < 10)  { /* If no index has been found, it means that the highscore is the worst one */
+				return nb_elements(list) -1;
+			}
+		}
+	}
+
+	return -1;
 }

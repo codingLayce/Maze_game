@@ -67,8 +67,6 @@ void menu_logic () {
 			break;
 		}
 	} while (quit == 1);
-
-	exit(0);
 }
 
 void display_choices() {

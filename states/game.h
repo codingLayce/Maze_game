@@ -50,7 +50,7 @@ void display_highscores(List *list);
  * @param maze to update
  * @param ghost to initialize
  */
-void init_ghost(Maze *maze, Player *ghost);
+void init_ghosts(Maze *maze, Player **ghosts, int nb_ghosts);
 
 /* Updates the ghost position and checks before moving and after moving if the ghost and the player are on the same cell.
  * If so, the player is killed and the game ends.
@@ -59,6 +59,6 @@ void init_ghost(Maze *maze, Player *ghost);
  * @param player to check his position
  * @return 0 if the player is killed, 1 otherwise
  */
-int update_ghost(Maze *maze, Player *ghost, Player player);
+int update_ghosts(Maze *maze, Player **ghosts, int nb_ghosts, Player player);
 
 #endif

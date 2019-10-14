@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <errno.h>
+#include <math.h>
 
 #include "game.h"
 #include "../maze/maze.h"
@@ -27,19 +28,29 @@
 #include "../maze/highscores.h"
 
 void play (Maze *maze) {
+	const int nb_empty_cells = (floor(maze->rows/2) * floor(maze->cols/2)) + (floor(maze->rows/2) * floor(maze->cols/2 - 1));
 	Player player;
-	Player ghost;
+	int nb_ghosts;
+	Player **ghosts;
 	char c;
 	int score = 0;
-	int res;
+	int res, i;
 	int exit = 1;
 	List *scores = load_highscores(maze);
+
+	if (maze->difficulty == 2) {
+		nb_ghosts = ceil(nb_empty_cells * GHOST_RATIO);
+		ghosts = malloc(nb_ghosts * sizeof(Player));
+		for (i = 0; i < nb_ghosts; i++) {
+			ghosts[i] = NULL;
+		}
+	}
 
 	system(CLEAR_COMMAND);
 
 	init_player(&player, PLAYER, 1, 0, '%');
 	set_player(&maze->board[1][0], &player);
-	init_ghost(maze, &ghost);
+	init_ghosts(maze, ghosts, nb_ghosts);
 
 	do {
 		printf("%s%s\n", MAZE_NAME_TEXT, maze->name);
@@ -72,7 +83,7 @@ void play (Maze *maze) {
 		if (res == 0) { /* Update the score only if the player has moved.  */
 			update_score(maze, player, &score);
 			if (maze->difficulty == 2 && exit != 0) {
-				if (update_ghost(maze, &ghost, player) == 0) {
+				if (update_ghosts(maze, ghosts, nb_ghosts, player) == 0) {
 					exit = 0;
 				}
 			}
@@ -87,6 +98,14 @@ void play (Maze *maze) {
 		scores = check_for_best_score(maze, scores, score);
 	}
 
+	/* unload the memory */
+	if (maze->difficulty == 2) {
+		for (i = 0; i < nb_ghosts; i++) {
+			free(ghosts[i]);
+		}
+		free(ghosts);
+	}
+
 	display_maze(maze);	
 	display_list(scores);
 	unload_list(scores);
@@ -94,41 +113,15 @@ void play (Maze *maze) {
 	read_key();
 }	
 
+
 List *check_for_best_score (Maze *maze, List *list, int score) {
 	char pseudo[MAX_PSEUDO_SIZE];
-	int ok = 1;
-	int i = 0;
 	int index = 0;
-	Highscore *tmp;
 	Highscore *new = malloc(sizeof(Highscore));
 
-	if (list == NULL) {
-		ok = 0;
-	} else {
-	    if (nb_elements(list) == 0) {
-	        index = 0;
-	        ok = 0;
-	    } else { /* Search the index where the highscore can be put */
-            tmp = list->best;
-            while (tmp != NULL) {
-                if (ok == 1 && score < tmp->score) {
-                    ok = 0;
-                    index = i;
-                }
-                tmp = tmp->next_score;
-                i++;
-            }
-            if (score == 1 && nb_elements(list) < 10)  { /* If no index has been found, it means that the highscore is the worst one */
-                index = nb_elements(list) -1;
-                ok = 0;
-            }
-            if (index >= 10) { /* In case of the index is out of the array size  */
-                ok = 1;
-            }
-		}
-	}
+	index = get_insertion_index(list, score);
 
-	if (ok == 0) {
+	if (index != -1) {
 		printf("%s", NEW_HIGHSCORE_TEXT);
 		printf("%s", ENTER_PSEUDO_TEXT);
 		scanf("%20s", pseudo);
@@ -172,13 +165,20 @@ void update_score (Maze *maze, Player player, int *score) {
 	}
 }
 
-int update_ghost(Maze *maze, Player *ghost, Player player) {
-	if (player.current_row == ghost->current_row && player.current_col == ghost->current_col) {
-		return 0;
-	}
-	move_ghost(maze, ghost);	
-	if (player.current_row == ghost->current_row && player.current_col == ghost->current_col) {
-		return 0;
+int update_ghosts(Maze *maze, Player **ghosts, int nb_ghosts, Player player) {
+	int i;
+
+	for (i = 0; i < nb_ghosts; i++) {
+		printf("%d;%d\n", ghosts[i]->current_row, ghosts[i]->current_col);
+
+		if (player.current_row == ghosts[i]->current_row && player.current_col == ghosts[i]->current_col) {
+			return 0;
+		}
+		move_ghost(maze, ghosts[i]);	
+		printf("OUI\n");
+		if (player.current_row == ghosts[i]->current_row && player.current_col == ghosts[i]->current_col) {
+			return 0;
+		}
 	}
 	return 1;
 }
@@ -194,8 +194,8 @@ int player_on_exit (Maze *maze, Player *player) {
 	return 1;
 }
 
-void init_ghost(Maze *maze, Player *ghost) {
-	int row, col;
+void init_ghosts(Maze *maze, Player **ghosts, int nb_ghosts) {
+	int row, col, i;
 
 	const int max_row = maze->rows - 2;
 	const int max_col = maze->cols - 2;
@@ -205,12 +205,15 @@ void init_ghost(Maze *maze, Player *ghost) {
 	if (maze->difficulty == 2) {
 		srand(time(NULL));
 
-		do {
-			row = (rand() % (max_row - min_row + 1)) + min_row;
-			col = (rand() % (max_col - min_col + 1)) + min_col;
-		} while (maze->board[row][col].type != EMPTY);
+		for (i = 0; i < nb_ghosts; i++) {
+			do {
+				row = (rand() % (max_row - min_row + 1)) + min_row;
+				col = (rand() % (max_col - min_col + 1)) + min_col;
+			} while (maze->board[row][col].type != EMPTY);
 
-		init_player(ghost, GHOST, row, col, 'G');
-		set_player(&maze->board[row][col], ghost);
+			ghosts[i] = malloc(sizeof(*ghosts[i]));
+			init_player(ghosts[i], GHOST, row, col, 'G');
+			set_player(&maze->board[row][col], ghosts[i]);
+		}
 	}
 }
