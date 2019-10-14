@@ -1,6 +1,8 @@
 #ifndef CONFIG_H_GUARD
 #define CONFIG_H_GUARD
 
+#define MAZE_MIN_ROWS 3
+#define MAZE_MIN_COLS 3
 #define MAZE_MAX_ROWS 101
 #define MAZE_MAX_COLS 201
 

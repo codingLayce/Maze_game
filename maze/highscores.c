@@ -117,7 +117,8 @@ List *insert_highscore (List *list, Highscore *score, int index) {
 	}
 
 	if (nb_elements(list) > 10) {
-		last = get_highscore(list, 10);
+		last = get_highscore(list, 9);
+		free(last->next_score);
 		last->next_score = NULL;
 	}
 

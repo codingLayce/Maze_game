@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "creator.h"
 #include "../maze/maze.h"
@@ -30,9 +31,11 @@ void create_labyrinthe(Maze *maze) {
 	height = ask_for_height();
 	difficulty = ask_for_difficulty();
 
-	printf("%s", ENTER_MAZE_NAME_TEXT);
-	scanf("%30s", name);
-	copy_string(maze->name, name, sizeof(name));
+	do {
+		printf("%s", ENTER_MAZE_NAME_TEXT);
+		scanf("%30s", name);
+		copy_string(maze->name, name, sizeof(name));
+	} while(strrchr(name, '/') != NULL);
 
 	init_maze(maze, width, height, difficulty);
 	generate_maze(maze, difficulty);
@@ -74,7 +77,7 @@ void save_maze (Maze *maze, char *name) {
 int ask_for_width() {
 	int width;
 	do {
-		printf("%s", ENTER_MAZE_WIDTH_TEXT);
+		printf("%s (%d-%d)\n", ENTER_MAZE_WIDTH_TEXT, MAZE_MIN_COLS, MAZE_MAX_COLS);
 		width = read_int();
 	} while (check_for_valid_width(width) == 1);
 	return width;
@@ -84,7 +87,7 @@ int check_for_valid_width(int width) {
 	if (width % 2 == 0) { /* If width isn't an odd number  */
 		return 1;
 	}
-	if (width < 0) {
+	if (width < MAZE_MIN_COLS) {
 		return 1;
 	}
 	if (width > MAZE_MAX_COLS) {
@@ -96,7 +99,7 @@ int check_for_valid_width(int width) {
 int ask_for_height() {
 	int height;
 	do {
-		printf("%s", ENTER_MAZE_HEIGHT_TEXT);
+		printf("%s (%d-%d)\n", ENTER_MAZE_HEIGHT_TEXT, MAZE_MIN_ROWS, MAZE_MAX_ROWS);
 		height = read_int();
 	} while (check_for_valid_height(height) == 1);
 	return height;
@@ -106,7 +109,7 @@ int check_for_valid_height(int height) {
 	if (height % 2 == 0) {
 		return 1;
 	}
-	if (height < 0) {
+	if (height < MAZE_MIN_ROWS) {
 		return 1;
 	}
 	if (height > MAZE_MAX_ROWS) {

@@ -47,11 +47,11 @@ void load_lang_fr() {
 	ENTER_MAZE_NAME_TEXT = malloc(sizeof(char) * strlen("Entrez un nom pour le labyrinthe (sans espaces):\n") + 1);
 	strcpy(ENTER_MAZE_NAME_TEXT, "Entrez un nom pour le labyrinthe (sans espaces):\n");
 
-	ENTER_MAZE_WIDTH_TEXT = malloc(sizeof(char) * strlen("Entrez la largeur du labyrinthe:\n") + 1);
-	strcpy(ENTER_MAZE_WIDTH_TEXT, "Entrez la largeur du labyrinthe:\n");
+	ENTER_MAZE_WIDTH_TEXT = malloc(sizeof(char) * strlen("Entrez la largeur du labyrinthe:") + 1);
+	strcpy(ENTER_MAZE_WIDTH_TEXT, "Entrez la largeur du labyrinthe:");
 
-	ENTER_MAZE_HEIGHT_TEXT = malloc(sizeof(char) * strlen("Entrez la hauteur du labyrinthe:\n") + 1);
-	strcpy(ENTER_MAZE_HEIGHT_TEXT, "Entrez la hauteur du labyrinthe:\n");
+	ENTER_MAZE_HEIGHT_TEXT = malloc(sizeof(char) * strlen("Entrez la hauteur du labyrinthe:") + 1);
+	strcpy(ENTER_MAZE_HEIGHT_TEXT, "Entrez la hauteur du labyrinthe:");
 
 	GAME_SCORE_TEXT = malloc(sizeof(char) * strlen("Score actuel: ") + 1);
 	strcpy(GAME_SCORE_TEXT, "Score actuel: ");
@@ -127,11 +127,11 @@ void load_lang_en() {
 	ENTER_MAZE_NAME_TEXT = malloc(sizeof(char) * strlen("Enter a name for the maze (no spaces):\n") + 1);
 	strcpy(ENTER_MAZE_NAME_TEXT, "Enter a name for the maze (no spaces):\n");
 
-	ENTER_MAZE_WIDTH_TEXT = malloc(sizeof(char) * strlen("Enter the maze width:\n") + 1);
-	strcpy(ENTER_MAZE_WIDTH_TEXT, "Enter the maze width:\n");
+	ENTER_MAZE_WIDTH_TEXT = malloc(sizeof(char) * strlen("Enter the maze width:") + 1);
+	strcpy(ENTER_MAZE_WIDTH_TEXT, "Enter the maze width:");
 
-	ENTER_MAZE_HEIGHT_TEXT = malloc(sizeof(char) * strlen("Enter the maze height:\n") + 1);
-	strcpy(ENTER_MAZE_HEIGHT_TEXT, "Enter the maze height:\n");
+	ENTER_MAZE_HEIGHT_TEXT = malloc(sizeof(char) * strlen("Enter the maze height:") + 1);
+	strcpy(ENTER_MAZE_HEIGHT_TEXT, "Enter the maze height:");
 
 	GAME_SCORE_TEXT = malloc(sizeof(char) * strlen("Current score: ") + 1);
 	strcpy(GAME_SCORE_TEXT, "Current score: ");
