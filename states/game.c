@@ -35,7 +35,6 @@ void play (Maze *maze) {
 	char c;
 	int score = 0;
 	int res, i;
-	int exit = 1;
 	List *scores = load_highscores(maze);
 
 	if (maze->difficulty == 2) {
@@ -82,21 +81,15 @@ void play (Maze *maze) {
 
 		if (res == 0) { /* Update the score only if the player has moved.  */
 			update_score(maze, player, &score);
-			if (maze->difficulty == 2 && exit != 0) {
-				if (update_ghosts(maze, ghosts, nb_ghosts, player) == 0) {
-					exit = 0;
-				}
+			if (maze->difficulty == 2) {
+				update_ghosts(maze, ghosts, nb_ghosts, player, &score);
 			}
 		}	
 
 		system(CLEAR_COMMAND);
-	} while (player_on_exit(maze, &player) != 0 && exit != 0);
+	} while (player_on_exit(maze, &player) != 0);
 
-	if (exit == 0) { /* Player hit a monster, so highscore possible  */
-		printf("%s", DEFEAT_TEXT);	
-	} else { /* Player wins, checking for highscore */
-		scores = check_for_best_score(maze, scores, score);
-	}
+	scores = check_for_best_score(maze, scores, score);
 
 	/* unload the memory */
 	if (maze->difficulty == 2) {
@@ -165,22 +158,20 @@ void update_score (Maze *maze, Player player, int *score) {
 	}
 }
 
-int update_ghosts(Maze *maze, Player **ghosts, int nb_ghosts, Player player) {
+void update_ghosts(Maze *maze, Player **ghosts, int nb_ghosts, Player player, int *score) {
 	int i;
 
 	for (i = 0; i < nb_ghosts; i++) {
-		printf("%d;%d\n", ghosts[i]->current_row, ghosts[i]->current_col);
-
 		if (player.current_row == ghosts[i]->current_row && player.current_col == ghosts[i]->current_col) {
-			return 0;
+			*score += GHOST_SCORE;
 		}
+		
 		move_ghost(maze, ghosts[i]);	
-		printf("OUI\n");
+		
 		if (player.current_row == ghosts[i]->current_row && player.current_col == ghosts[i]->current_col) {
-			return 0;
+			*score += GHOST_SCORE;
 		}
 	}
-	return 1;
 }
 
 void update_cell_type (Cell *cell, cell_type type) {

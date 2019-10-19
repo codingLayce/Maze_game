@@ -57,8 +57,7 @@ void init_ghosts(Maze *maze, Player **ghosts, int nb_ghosts);
  * @param maze played
  * @param ghost that is moving
  * @param player to check his position
- * @return 0 if the player is killed, 1 otherwise
  */
-int update_ghosts(Maze *maze, Player **ghosts, int nb_ghosts, Player player);
+void update_ghosts(Maze *maze, Player **ghosts, int nb_ghosts, Player player, int *score);
 
 #endif

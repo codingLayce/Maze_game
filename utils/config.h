@@ -20,6 +20,7 @@
 static const int STEP_SCORE = 10;
 static const int TREASURE_SCORE = -50;
 static const int TRAP_SCORE = 50;
+static const int GHOST_SCORE = 1000;
 static const double TRAPS_RATIO = 0.05;
 static const double TREASURE_RATIO = 0.05;
 static const double GHOST_RATIO = 0.002;
