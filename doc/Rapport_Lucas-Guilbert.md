@@ -97,6 +97,43 @@ Le programme est séparé en 3 grandes parties:
 - Maze: modèle,
 - Movements: logique de movements des différentes entités,
 - States: vue assemblant le modèle et les mouvements.
+- (Utils: quelques fonctions utilitaires).
+
+## Modèle
+J'ai décidé de représenter mon labyrinthe par une matrice de Cell car cela me permet de définir
+ le type de chaque cellule ainsi que la valeur de la cellule pour l'algorithme de génération.
+
+Dans le modèle se trouve aussi les fonctions de création du labyrinthe, le système de highscore
+ (par des listes chaînées) ainsi que le joueur.
+ 
+Pour le joueur, j'ai décidé de ne faire qu'une structure représentant un joueur humain mais aussi
+ un joueur monstre. Cela me permet de faire des fonctions plus génériques mais rend certaines tâches
+ plus compliquées (voir améliorations possibles).
+
+Pour la création de mon labyrinthe en mode difficile, il faut casser des murs en plus une fois le
+ labyrinthe parfait trouvé. Pour choisir le nombre de murs à casser, j'utilise une formule:
+- **10% de la largeur + la hauteur du labyrinthe**
+
+Ex: 10+5 = 15 * 0.1 = 1.5 -> 1 mur.
+Ex: 33+13 = 46 * 0.1 = 4.6 -> 4 murs.
+
+De même que pour les murs en mode difficile, il faut choisir un nombre de piège et de trésors à générer 
+sur le labyrinthe :
+- **Le nombre de cellules vides x un ratio (0.05 par défaut) arrondi à l'entier inférieur**
+
+Ex: 25 x 0.05 = 1.25 -> 1 piège et 1 trésor.
+Ex: 150 x 0.05 = 7.5 -> 7 pièges et 7 trésors.
+
+Le système est le même pour les monstres mais avec un ratio différent (0.001 par défaut).
+
+## Mouvements
+
+
+## Etats
+
+
+## Tests
+
 
 ## Bugs
 Actuellement un bug est connu:

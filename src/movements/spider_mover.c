@@ -29,6 +29,7 @@ void move_spider(Maze *maze, Player *spider) {
     dir  = get_random_dir();
 
     do {
+	printf("HERE");
         switch (dir) {
             case UP:
                 res = move_spider_up(maze, spider);

@@ -28,7 +28,7 @@ int load_maze (Maze *maze) {
 	int i = 0;
 	int choice;
 	/* I am counting the number of existing files in the saves folder to allocate the memory.  */
-	int nb_saves = get_nb_of_files_in_dir("./saves");
+	int nb_saves = get_nb_of_files_in_dir(PATH_TO_SAVES);
 	/* I reserve the right space to save the dirent structure. 
 	 * I doing it this way because for me it's easier to understand.
 	 * And to retrieve the file i'll just have to make "saves[<choice>-1]". 
@@ -41,7 +41,7 @@ int load_maze (Maze *maze) {
             printf("%s\n", SELECT_MAZE_TEXT);
             i = 0;
 
-            saves_folder = opendir("./saves");
+            saves_folder = opendir(PATH_TO_SAVES);
             if (saves_folder) {
                 struct dirent *file;
                 while ((file = readdir(saves_folder)) != NULL) { /* For each file in the folder */
@@ -81,7 +81,7 @@ void load_file (Maze *maze, char *name) {
 	FILE *file;
 	char path[40];
 
-	sprintf(path, "./saves/%s", name);
+	sprintf(path, "%s%s", PATH_TO_SAVES, name);
 
 	file = fopen(path, "r");
 	if (file == NULL) {

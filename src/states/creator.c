@@ -55,7 +55,7 @@ void save_maze (Maze *maze, char *name) {
 	char path[MAX_NAME_SIZE+10];
 	int n;
 
-	sprintf(path, "saves/%s.cfg", name);
+	sprintf(path, "%s%s.cfg", PATH_TO_SAVES, name);
 	
 	out = fopen(path, "w+");
 	if (out == NULL) {

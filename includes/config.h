@@ -28,8 +28,6 @@ static const double SPIDER_RATIO = 0.001;
 static const double SPIDER_SCORE = 1000;
 static const int SPIDER_MOBILITY_RANGE = 5;
 
-static const char PATH_TO_SAVES[8] = "./saves/";
-
 /* Console colors constants */
 static const char WALL_COLOR[11] = "\033[35;45m";
 static const char EMPTY_COLOR[11] = "\033[39m";
@@ -39,6 +37,8 @@ static const char TREASURE_COLOR[11] = "\033[32m";
 static const char TRAP_COLOR[11] = "\033[31m";
 static const char DEFAULT_COLOR[11] = "\033[39;49m";
 static const char SPIDER_COLOR[11] = "\033[36m";
+
+char *PATH_TO_SAVES;
 
 /* All texts displayed on the console (will be initialized in the load_lang_<lang> function */
 char *CREATE_MAZE_TEXT;

@@ -19,11 +19,13 @@
 #include "config.h"
 
 int main (int argc, char *argv[]) {
+    	system(CLEAR_COMMAND);
+	
 	if (check_for_config_params(argc, argv) == 1) { /* If no arguments the default lang is FRENCH  */
 		load_lang_fr();
 	}
 
-    system(CLEAR_COMMAND);
+	
 	menu_logic();
 
 	free_config();

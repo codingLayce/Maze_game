@@ -7,6 +7,28 @@
 
 int check_for_config_params(int argc, char **argv) {
 	char lang[4];
+	char *path;
+	char *point;
+
+	/* Here i'am trying to figure out where the program has been launched to initialize the right path to the saves directory.
+	 * Thanks to that i'am able to launch the program from anywhere and the saves directory will always be the one under bin/ 
+	 */
+	point = strrchr(argv[0], '/'); /* Searching the last occurency of '/' */
+
+	if (point == NULL) { /* If there isn't it means that the program has been launched from bin/  */
+		path = malloc(sizeof(char) * strlen("./") + 1);
+		strcpy(path, "./");
+	} else { /* Otherwise i retreive the path  */
+		path = malloc(sizeof(char) * strlen(argv[0]) - strlen(point) + 2);
+		strncpy(path, argv[0], strlen(argv[0]) - strlen(point) + 1);
+	}
+
+	/* And them i allocate dynamically the memory and concat the path to saves/  */
+	PATH_TO_SAVES = malloc(sizeof(char) * strlen(path) + strlen("saves/") + 1);
+	strcpy(PATH_TO_SAVES, path);
+	strcat(PATH_TO_SAVES, "saves/");
+
+	free(path);
 
 	if (argc > 1) {
 		if (strcmp(argv[1], "-lang") == 0) {
@@ -93,19 +115,19 @@ void load_lang_fr() {
 	strcpy(MAZE_GENERATED_TEXT, "Ce labyrinthe a été généré: ");
 
 	SAVING_MAZE_TEXT = malloc(sizeof(char) * strlen("Sauvegarde du labyrinthe dans le fichier saves/") + 1);
-    strcpy(SAVING_MAZE_TEXT, "Sauvegarde du labyrinthe dans le fichier saves/");
+	strcpy(SAVING_MAZE_TEXT, "Sauvegarde du labyrinthe dans le fichier saves/");
 
-    ERROR_WRITING_FILE = malloc(sizeof(char) * strlen("Erreur: Ecriture dans le fichier") + 1);
-    strcpy(ERROR_WRITING_FILE, "Erreur: Ecriture dans le fichier");
+	ERROR_WRITING_FILE = malloc(sizeof(char) * strlen("Erreur: Ecriture dans le fichier") + 1);
+	strcpy(ERROR_WRITING_FILE, "Erreur: Ecriture dans le fichier");
 
-    SELECT_MAZE_TEXT = malloc(sizeof(char) * strlen("Choisissez un labyrinthe parmis les fichiers suivants:") + 1);
-    strcpy(SELECT_MAZE_TEXT, "Choisissez un labyrinthe parmis les fichiers suivants:");
+	SELECT_MAZE_TEXT = malloc(sizeof(char) * strlen("Choisissez un labyrinthe parmis les fichiers suivants:") + 1);
+	strcpy(SELECT_MAZE_TEXT, "Choisissez un labyrinthe parmis les fichiers suivants:");
 
-    ERROR_READING_FILE = malloc(sizeof(char) * strlen("Erreur: Lecture du fichier") + 1);
-    strcpy(ERROR_READING_FILE, "Erreur: Lecture du fichier");
+	ERROR_READING_FILE = malloc(sizeof(char) * strlen("Erreur: Lecture du fichier") + 1);
+	strcpy(ERROR_READING_FILE, "Erreur: Lecture du fichier");
 
-    NO_SAVES_TEXT = malloc(sizeof(char) * strlen("Aucune sauvegarde trouvée") + 1);
-    strcpy(NO_SAVES_TEXT, "Aucune sauvegarde trouvée");
+	NO_SAVES_TEXT = malloc(sizeof(char) * strlen("Aucune sauvegarde trouvée") + 1);
+	strcpy(NO_SAVES_TEXT, "Aucune sauvegarde trouvée");
 }
 
 void load_lang_en() {
@@ -178,17 +200,17 @@ void load_lang_en() {
 	SAVING_MAZE_TEXT = malloc(sizeof(char) * strlen("Saving the maze in the file saves/") + 1);
 	strcpy(SAVING_MAZE_TEXT, "Saving the maze in the file saves/");
 
-   	ERROR_WRITING_FILE = malloc(sizeof(char) * strlen("Error: Writing in the file") + 1);
-    strcpy(ERROR_WRITING_FILE, "Error: Writing in the file");
+	ERROR_WRITING_FILE = malloc(sizeof(char) * strlen("Error: Writing in the file") + 1);
+	strcpy(ERROR_WRITING_FILE, "Error: Writing in the file");
 
-    SELECT_MAZE_TEXT = malloc(sizeof(char) * strlen("Select a maze from the list below:") + 1);
-    strcpy(SELECT_MAZE_TEXT, "Select a maze from the list below:");
+	SELECT_MAZE_TEXT = malloc(sizeof(char) * strlen("Select a maze from the list below:") + 1);
+	strcpy(SELECT_MAZE_TEXT, "Select a maze from the list below:");
 
-    ERROR_READING_FILE = malloc(sizeof(char) * strlen("Error: Reading the file") + 1);
+	ERROR_READING_FILE = malloc(sizeof(char) * strlen("Error: Reading the file") + 1);
 	strcpy(ERROR_READING_FILE, "Error: Reading the file");
 
-    NO_SAVES_TEXT = malloc(sizeof(char) * strlen("No saves found") + 1);
-    strcpy(NO_SAVES_TEXT, "No saves found");
+	NO_SAVES_TEXT = malloc(sizeof(char) * strlen("No saves found") + 1);
+	strcpy(NO_SAVES_TEXT, "No saves found");
 }
 
 void free_config() {
@@ -219,4 +241,5 @@ void free_config() {
 	free(SELECT_MAZE_TEXT);
 	free(ERROR_READING_FILE);
 	free(NO_SAVES_TEXT);
+	free(PATH_TO_SAVES);
 }
