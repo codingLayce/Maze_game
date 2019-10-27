@@ -41,7 +41,7 @@ Afin de lancer le programme, l'utilisateur doit se placer dans le répertoire "b
  binaire "labyrinthe".
 
 Le programme possède une configuration permettant de le lancer en français ou en anglais (par
- défaut il se lance en français). Il suffit de rajouter en option de lancement "-lang en" ou
+ défaut il se lance en français). Il suffit d'ajouter en option de lancement "-lang en" ou
   "-lang fr" afin de modifier la langue du programme.
 
 ## Menu
@@ -127,19 +127,48 @@ Ex: 150 x 0.05 = 7.5 -> 7 pièges et 7 trésors.
 Le système est le même pour les monstres mais avec un ratio différent (0.001 par défaut).
 
 ## Mouvements
+Pour les mouvements il était demandé dans le sujet d'utiliser des pointeurs de fonction, hors mon architecture ne me permettait pas d'en utiliser à cause d'inclusions cycliques. J'ai donc décidé de créer un module dédié aux mouvements et la bonne fonction de mouvement sera appelée en fonction du type de joueur.
 
+Le module se découpe donc en 4 parties (une partie générale et une pour chaque type de joueur "PLAYER", "GHOST", "SPIDER").
+
+La partie générale se contente de déplacer l'entitée vers la direction souhaitée, elle ne fait aucune vérification.
+
+Comme pour chaque type de joueur la logique est differente, les fonctions sont donc differentes et ne vérifient pas les mêmes paramètres. En effet le fantôme peut traverser les mûrs alors que les autres joueurs non, l'araîgnéee ne peut pas se déplacer à plus de 5 cases (par défaut) de son point d'apparition.
 
 ## Etats
+Afin de matérialiser les enchaînements entre les différentes parties du programme, j'ai utilisé une sorte de "machine d'état".
+Ce n'est pas à proprement parlé une machine d'état mais chaque état représente une grande partie du programme. Voici les états:
+- Menu (boucle principale + choix de création, chargement et jeu),
+- Creator (état représentant la création d'un labyrinthe),
+- Load (état représentant le chargement d'un labyrinthe),
+- Game (état représentant le jeu).
 
+Ce n'est pas à proprement parlé une "machine d'état" car les fonctions représentant un état ne retourne pas l'état suivant, mais l'appelle directement.
+
+La boucle principale du programme se trouve donc dans l'état Menu, le programme tourne tant que l'utilisateur n'a pas choisi l'option "Quitter".
+
+Dans la mesure du possible mes états ne font que l'intermédiaire entre l'utilisateur et le modèle, c'est-à-dire qu'ils affichent les informations et récupèrent les entrées de l'utilisateur. J'ai essayé le plus possible de considérer mes étas comme des controlleurs.
+
+## Configuration
+Afin de rendre modulaire mon programme j'ai mis en place un système de configuration. Le `.h` est dans les includes et le `.c` dans `utils/config.c`.
+
+Le `.h` va contenir toutes les constantes du programme, notamment le score que donne chacune des entités, la taille maximale des entrées mais il définit aussi la fonction système à appeler pour "clear" l'écran en fonction du système d'exploitation.
+
+On peut voir en fin de ce fichier un certain nombre de pointeur de char, se sont les constantes de texte utilisées dans le programme. Elles sont définies dynamiquement dans le `.c`.
+
+Libre à vous de modifier certaines des constantes afin de voir le comportement du programme notamment en modifiant le ratio d'apparition des monstres ou en ajoutant une nouvelle langue comme l'espagnol ?
+
+De plus la configuration permet de palier à un problème lié au dossier de sauvegarde. En effet imaginons que mes sauvegardes se trouvent dans le dossier `bin/saves/` et que mon exécutation est lui aussi dans le `bin/`. Si je navigue jusque dans le `bin/` et lance le programme, celui-ci pourra accéder au dossier `saves/` afin de récupérer les sauvegardes. Mais si je lance le programme depuis la racine de mon projet en faisant comme suis: `./bin/labyrinthe` il essaiera d'accéder aux sauvegardes `saves/` mais ne trouvera rien.
+
+Afin de régler ce problème je me base sur la valeur de argv[0] que tout programme possède. Dans le premier cas énoncé précédement, `argv[0] = "labyrinthe"` je peux donc en déduire que le dossier de sauvegardes a pour chemin (par rapport au pwd du shell parent) `./saves/`. Pour le deuxième cas énoncé `argv[0] = "bin/labyrinthe` il me suffit d'isoler le nom de l'exécutable `bin/` et d'y ajouter le dossier de sauvegardes `bin/saves/`. Grâce à ça il est possible d'accéder aux sauvegardes peut importe d'où est lancé le programme.
 
 ## Tests
+J'ai effectué très peu de tests (pas une bonne pratique je reconnais) mais ils m'ont permis de régler un problème avec les highscores.
 
+Les tests se trouvent sous `src/tests/` et possèdent un Makefile qui leur est propre.
 
 ## Bugs
-Actuellement un bug est connu:
-
-Si le programme n'est pas lancé depuis le dossier bin, il sera impossible de récupérer les
- sauvegardes n'y même d'en créer.
+Actuellement aucun bug n'est connu.
 
 Toutes les entrées de l'utilisateur sont protégées:
 - Vérification des bornes quand on demande la taille du labyrinthe,
@@ -151,4 +180,4 @@ Toutes les entrées de l'utilisateur sont protégées:
 De mon point de vue, la partie à revoir dans mon code est la partie "Player" et la logique dans
  mon état "game".
  
-En 
+En effet, comme expliqué plus haut, j'ai voulu faire qu'une seule structure pouvant regrouper toutes les entités (Player) afin de créer des fonctions plus génériques. Mais au moment d'ajouter les araîgnées je me suis rendu compte que j'avais besoin d'autres attributs dans la structure et donc de modifier le comportement du joueur et du fantôme. Cela m'a rendu la tâche pénible et la logique de scoring du fantôme et de l'araîgnée étant la même, il y a pas mal de duplication de code dans le fichier `game.c` (fonctions: `update_ghosts`, `update_spiders`, `init_ghosts`, `init_spiders`).
