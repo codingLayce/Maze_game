@@ -117,7 +117,7 @@ Pour la création de mon labyrinthe en mode difficile, il faut casser des murs e
 Ex: 10+5 = 15 * 0.1 = 1.5 -> 1 mur.
 Ex: 33+13 = 46 * 0.1 = 4.6 -> 4 murs.
 
-De même que pour les murs en mode difficile, il faut choisir un nombre de piège et de trésors à générer 
+De même que pour les murs en mode difficile, il faut choisir un nombre de pièges et de trésors à générer 
 sur le labyrinthe :
 - **Le nombre de cellules vides x un ratio (0.05 par défaut) arrondi à l'entier inférieur**
 
@@ -127,7 +127,7 @@ Ex: 150 x 0.05 = 7.5 -> 7 pièges et 7 trésors.
 Le système est le même pour les monstres mais avec un ratio différent (0.001 par défaut).
 
 ## Mouvements
-Pour les mouvements il était demandé dans le sujet d'utiliser des pointeurs de fonction, hors mon architecture ne me permettait pas d'en utiliser à cause d'inclusions cycliques. J'ai donc décidé de créer un module dédié aux mouvements et la bonne fonction de mouvement sera appelée en fonction du type de joueur.
+Pour les mouvements il était demandé dans le sujet d'utiliser des pointeurs de fonction, or mon architecture ne me permettait pas d'en utiliser à cause d'inclusions cycliques. J'ai donc décidé de créer un module dédié aux mouvements et la bonne fonction de mouvement sera appelée en fonction du type de joueur.
 
 Le module se découpe donc en 4 parties (une partie générale et une pour chaque type de joueur "PLAYER", "GHOST", "SPIDER").
 
@@ -181,3 +181,5 @@ De mon point de vue, la partie à revoir dans mon code est la partie "Player" et
  mon état "game".
  
 En effet, comme expliqué plus haut, j'ai voulu faire qu'une seule structure pouvant regrouper toutes les entités (Player) afin de créer des fonctions plus génériques. Mais au moment d'ajouter les araîgnées je me suis rendu compte que j'avais besoin d'autres attributs dans la structure et donc de modifier le comportement du joueur et du fantôme. Cela m'a rendu la tâche pénible et la logique de scoring du fantôme et de l'araîgnée étant la même, il y a pas mal de duplication de code dans le fichier `game.c` (fonctions: `update_ghosts`, `update_spiders`, `init_ghosts`, `init_spiders`).
+
+Comme amélioration possible, je pourrais attendre le signal `SIGINT` (Ctrl+C) et libérer la mémoire de toutes les variables allouées dynamiquement afin d'éviter les fuites mémoire quand l'utilisateur quitte brutalement le programme.
